@@ -13,16 +13,9 @@ Aggiungere una select accanto al bottone di generazione, che fornisca una scelta
 
 
 // VARIABILI (richiamano i dati inseriti nell'HTML)
-
-/**
- * @type {HTMLSelectElement}
- */
 const squareNumbersSelect = document.querySelector("[name='squareNumbers']");
 const btnStart = document.getElementById("btn-start");
 
-/**
- * @type {HTMLElement}
- */
 const gridContainer = document.querySelector(".grid-container");
 
 
@@ -41,17 +34,13 @@ btnStart.addEventListener("click", function () {
 
   //INVOCO LA FUNZIONE: Aggiunge all'HTML i quadrati
   printGrid(gridContainer, gridSize);
-
+  // INVOCO LA FUNZIONE: Array delle bombe
+  generateBombs(squareNumbers);
 
 });
 
 
-/**
- * FUNZIONE (Genero i quadrati della griglia)
- * @param {string} squareContent testo inserito all'interno dei quadrati
- * @param {number} squareNumbers numero dei quadrati all'interno del container
- * @returns {HTMLDivElement}
-*/
+// FUNZIONE (Genero i quadrati della griglia)
 function createSquare(squareContent, squareNumbers) {
   // Uso il createElement per creare i div che saranno i quadrati
   const square = document.createElement("div");
@@ -66,11 +55,9 @@ function createSquare(squareContent, squareNumbers) {
   square.style.flexBasis = `calc(100% / ${squareRow})`
 
   // Scateno un evento al click (calbio colore al quadrato al click)
-  square.addEventListener("click", function() {
+  square.addEventListener("click", function () {
     // Aggiungo la classe bg-primary al posto di quella che c'è già
     square.classList.toggle("bg-primary");
-    // Stampo in console il quadrato che viene cliccato
-    console.log(`Hai cliccato la cella numero ${squareNumbersSelect}`);
   })
 
   // Ritorno il valore di square
@@ -78,11 +65,7 @@ function createSquare(squareContent, squareNumbers) {
 }
 
 
-/**
- * FUNZIONE (Genero la griglia contenente i quadrati)
- * @param {number} squareNumber numero dei quadrati da creare dentro la griglia
- * @returns {HTMLDivElement[]}
-*/
+// FUNZIONE (Genero la griglia contenente i quadrati)
 function createGrid(squareNumber) {
   // Creo un array dove mettere i quadrati all'interno
   const grid = [];
@@ -99,13 +82,28 @@ function createGrid(squareNumber) {
 }
 
 
-/**
- * FUNZIONE (Stampo la griglia all'interno dell'HTML)
- * @param {HTMLElement} container
- * @returns {HTMLDivElement[]}
- */
+// FUNZIONE (Stampo la griglia all'interno dell'HTML)
 function printGrid(container, squareSize) {
   for (let i = 0; i < squareSize.length; i++) {
     container.append(squareSize[i]);
   }
 }
+
+// FUNZIONE (Genero le 16 bombe)  // Sistemare... genera una quantità diversa di elementi all'interno dell'array
+function generateBombs(squareNumbers) {
+  // Creo un array vuoto per le bombe
+  let arrayBomb = [];
+  // Creo ciclo for per generare le 16 bombe
+  for (let i = 1; i <= 16; i++) {
+    // Salvo il valore in una costante
+    const bomb = Math.floor(Math.random() * squareNumbers) + 1;
+    // Tramite un IF evito che i numeri delle bombe si ripetono
+    if (arrayBomb.indexOf(bomb) === -1) {
+      // Pusho le bombe random dentro l'array
+      arrayBomb.push(bomb);
+    }
+  }
+console.log(arrayBomb);
+return arrayBomb;
+}
+
